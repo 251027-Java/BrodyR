@@ -12,7 +12,10 @@ public class LetterGrade {
                 grade = in.nextDouble();
                 if (grade < 0 || grade > 100){
                     IO.print("That value isn't in range from 0 - 100. Try again >>> ");
-                } else { invalidInput = false; }
+                } else {
+                    invalidInput = false;
+                    in.close();
+                }
             } catch (Exception e) {
                 IO.print("ERROR: Invalid Input. Try again >>> ");
                 in.nextLine();
