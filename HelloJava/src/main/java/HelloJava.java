@@ -46,7 +46,7 @@ public class HelloJava {
         null
         */
 
-        // Control flow covers all of the keywords and functionality that allow an application to make a decision and act on it
+        // Control flow covers all the keywords and functionality that allow an application to make a decision and act on it
         // if, else
         // switch, case
         // for, while, do while
@@ -66,5 +66,13 @@ public class HelloJava {
             IO.println("myBoolean was false");
         }
 
+        String newString;
+        newString = "Hello everyone!";
+        IO.println(newString);
+        for (int i = 0; i < newString.length(); i++){
+            IO.println(newString.charAt(i));
+        }
+        Scanner in = new Scanner(System.in);
+        //newString = in.nextLine();
     }
 }
