@@ -17,7 +17,7 @@ public class Expense {
 
     @Override
     public String toString(){
-        return "org.example.Expense [id=" + this.id + ", date=" + this.date + ", value=" + this.value + ", merchant=" + this.merchant + "]";
+        return "Expense [id=" + this.id + ", date=" + this.date + ", value=" + this.value + ", merchant=" + this.merchant + "]";
     }
 
     public String toCSV(){

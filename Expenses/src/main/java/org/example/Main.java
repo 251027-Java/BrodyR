@@ -17,12 +17,13 @@ public class Main {
         expenses.add(new Expense(1, new Date(), 99.95, "Walmart"));
         expenses.add(new Expense(2, new Date(), 85.75, "Costco"));
         expenses.add(new Expense(3, new Date(), 10000, "Private Jet"));
-        System.out.println(expenses);
+
 
         IRepository repo = new TextRepository();
         //IRepository repo = new CSVRepository();
         //IRepository repo = new JSONRepository();
-
+        expenses = repo.loadExpenses();
+        System.out.println(expenses);
         repo.saveExpenses(expenses);
 
         System.out.println("Expensive Tracker Closing...");
