@@ -1,11 +1,11 @@
-package org.example;
+package org.example.Service;
 
+import org.example.Expense;
 import org.example.Repository.CSVRepository;
 import org.example.Repository.IRepository;
 import org.example.Repository.JSONRepository;
 import org.example.Repository.TextRepository;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.List;
 
@@ -27,26 +27,13 @@ public class Service {
             System.out.print("What would you like to do? (Type help for options) >>> ");
             input = scanner.nextLine();
             switch (input.toLowerCase()) {
-                case "help" -> {
-                    help();
-                    break;
-                }
-                case "set repository" -> {
-                    setRepo();
-                    break;
-                }
-                case "create expense" -> {
-                    createExpense();
-                }
-                case "read expense" -> {
-                    readExpense();
-                }
-                case "update expense" -> {
-                    updateExpense();
-                }
-                case "delete expense" -> {
-                    deleteExpense();
-                }
+                case "help" -> help();
+                case "set repository" -> setRepo();
+                case "create expense" -> createExpense();
+                case "read expense" -> readExpense();
+                case "list all expenses" -> listAllExpenses();
+                case "update expense" -> updateExpense();
+                case "delete expense" -> deleteExpense();
             }
         } while (!input.equalsIgnoreCase("exit"));
     }
@@ -69,12 +56,19 @@ public class Service {
         int id;
         try{
             id = scanner.nextInt();
+            scanner.nextLine();
             if(id < 1 || id > expenses.size()){
                 System.out.println("No expense with that ID.");
                 return;
             }
             System.out.println(repo.readExpense(id));
         } catch (Exception e) { System.out.println("Not a valid id."); }
+    }
+
+    public void listAllExpenses(){
+        for (Expense e : expenses){
+            System.out.println(e);
+        }
     }
 
     public void updateExpense(){
@@ -109,6 +103,7 @@ public class Service {
         int id;
         try{
             id = scanner.nextInt();
+            scanner.nextLine();
             if(id < 1 || id > expenses.size()){
                 System.out.println("No expense with that ID.");
                 return;
@@ -130,7 +125,6 @@ public class Service {
                 }
                 this.repo = temp;
                 System.out.println("Set repository to txt");
-                break;
             }
             case "csv" -> {
                 temp = new CSVRepository();
@@ -140,7 +134,6 @@ public class Service {
                 }
                 this.repo = temp;
                 System.out.println("Set repository to csv");
-                break;
             }
             case "json" -> {
                 temp = new JSONRepository();
@@ -150,14 +143,13 @@ public class Service {
                 }
                 this.repo = temp;
                 System.out.println("Set repository to json");
-                break;
             }
             default -> System.out.println("Not a valid repository.");
         }
     }
 
     public void help(){
-        System.out.println("Actions:\nset repository\ncreate expense\nread expense\nupdate expense\ndelete expense");
+        System.out.println("Actions:\nset repository\ncreate expense\nread expense\nlist all expenses\nupdate expense\ndelete expense");
     }
 
     public List<Expense> getExpenses(){

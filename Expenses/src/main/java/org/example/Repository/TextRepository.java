@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TextRepository implements IRepository{
-    private String filename = "expenses.txt";
+    private String filename = "src/main/expenses.txt";
     
     public TextRepository(){};
 
@@ -50,9 +50,9 @@ public class TextRepository implements IRepository{
                 double value = Double.parseDouble(parts[5]);
                 String merchant = parts[7];
                 expenses.add(new Expense(id, date, value, merchant));
+                System.out.println("Successfully loaded expenses from \"expenses.txt\"");
             }
         } catch ( Exception e ) { System.out.println(e); }
-        System.out.println("Successfully loaded expenses from \"expenses.txt\"");
         return expenses;
     }
     

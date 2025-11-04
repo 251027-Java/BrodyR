@@ -15,7 +15,10 @@ public class Expense {
         this.merchant = merchant;
     }
 
-    public int getID(){ return this.id; }
+    public int getID() { return this.id; }
+    public Date getDate() {return this.date; }
+    public double getValue() { return this.value; }
+    public String getMerchant() { return this.merchant; }
 
     @Override
     public String toString(){

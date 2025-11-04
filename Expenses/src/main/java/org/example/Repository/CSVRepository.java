@@ -51,9 +51,10 @@ public class CSVRepository implements IRepository{
                 double value = Double.parseDouble(parts[2]);
                 String merchant = parts[3];
                 expenses.add(new Expense(id, date, value, merchant));
+                System.out.println("Successfully loaded expenses from \"expenses.csv\"");
             }
         } catch ( Exception e ) { System.out.println(e); }
-        System.out.println("Successfully loaded expenses from \"expenses.csv\"");
+
         return expenses;
     }
 
