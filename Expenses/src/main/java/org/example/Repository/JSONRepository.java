@@ -17,6 +17,28 @@ public class JSONRepository implements IRepository{
 
     public JSONRepository(){};
 
+    public void createExpense(Expense expense){
+        List<Expense> expenses = loadExpenses();
+        expenses.add(expense);
+        saveExpenses(expenses);
+    }
+
+    public Expense readExpense(int id){
+        return loadExpenses().stream().filter(e -> e.getID() == id).findFirst().orElse(null);
+    }
+
+    public void updateExpense(Expense expense){
+        List<Expense> expenses = loadExpenses();
+        List<Expense> updatedExpenses = expenses.stream().map(e -> (e.getID() == expense.getID()) ? expense : e).toList();
+        saveExpenses(updatedExpenses);
+    }
+
+    public void deleteExpense(int id){
+        List<Expense> expenses = loadExpenses();
+        expenses.removeIf(e -> e.getID() == id);
+        saveExpenses(expenses);
+    }
+
     public List<Expense> loadExpenses(){
         System.out.println("Loading expenses from \"expenses.json\"");
         try {
@@ -39,5 +61,10 @@ public class JSONRepository implements IRepository{
             writer.close();
             System.out.println("Created \"expenses.json\" file");
         } catch (Exception e) { System.out.println(e); }
+    }
+
+    @Override
+    public void clearRepo(){
+        saveExpenses(new ArrayList<Expense>());
     }
 }

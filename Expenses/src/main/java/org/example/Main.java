@@ -12,22 +12,7 @@ import java.util.List;
 public class Main {
     static void main() {
         System.out.println("Expense Tracker Starting...");
-        List<Expense> expenses = new ArrayList<>();
-        /*
-        System.out.println("Creating test expenses:");
-        expenses.add(new Expense(1, new Date(), 99.95, "Walmart"));
-        expenses.add(new Expense(2, new Date(), 85.75, "Costco"));
-        expenses.add(new Expense(3, new Date(), 10000, "Private Jet"));
-        */
-
-
-        IRepository repo = new TextRepository();
-        //IRepository repo = new CSVRepository();
-        //IRepository repo = new JSONRepository();
-        expenses = repo.loadExpenses();
-        System.out.println(expenses);
-        repo.saveExpenses(expenses);
-
+        Service service = new Service();
         System.out.println("Expensive Tracker Closing...");
     }
 }

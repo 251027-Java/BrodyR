@@ -15,6 +15,8 @@ public class Expense {
         this.merchant = merchant;
     }
 
+    public int getID(){ return this.id; }
+
     @Override
     public String toString(){
         return "Expense [id=" + this.id + ", date=" + this.date + ", value=" + this.value + ", merchant=" + this.merchant + "]";
