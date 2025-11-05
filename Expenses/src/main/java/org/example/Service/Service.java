@@ -12,15 +12,18 @@ import java.util.List;
 public class Service {
     private List<Expense> expenses;
     IRepository repo;
-    Scanner scanner;
 
     public Service(){
         repo = new TextRepository();
         expenses = repo.loadExpenses();
-        scanner = new Scanner(System.in);
-        getNextAction();
     }
 
+    public Service(IRepository repo){
+        this.repo = repo;
+        expenses = repo.loadExpenses();
+    }
+
+    /*
     public void getNextAction(){
         String input;
         do {
@@ -28,17 +31,18 @@ public class Service {
             input = scanner.nextLine();
             switch (input.toLowerCase()) {
                 case "help" -> help();
-                case "set repository" -> setRepo();
-                case "create expense" -> createExpense();
-                case "read expense" -> readExpense();
+                case "set repository" -> setRepoInfo();
+                case "create expense" -> createExpenseInfo();
+                case "read expense" -> readExpenseInfo();
                 case "list all expenses" -> listAllExpenses();
-                case "update expense" -> updateExpense();
-                case "delete expense" -> deleteExpense();
+                case "update expense" -> updateExpenseInfo();
+                case "delete expense" -> deleteExpenseInfo();
             }
         } while (!input.equalsIgnoreCase("exit"));
     }
+    */
 
-    public void createExpense(){
+    public void createExpenseInfo(Scanner scanner){
         try{
             System.out.print("Please enter information for expense.\nValue:\t");
             double value = scanner.nextDouble();
@@ -46,12 +50,17 @@ public class Service {
             System.out.print("Merchant:\t");
             String merchant = scanner.nextLine();
             Expense newExpense = new Expense(expenses.size()+1, new Date(), value, merchant);
-            repo.createExpense(newExpense);
+            createExpense(newExpense);
             System.out.println("New expense created with id " + newExpense.getID() + ".\n" + newExpense);
         } catch(Exception e) { System.out.println("INVALID INPUT. CANCELLING EXPENSE CREATION"); }
     }
 
-    public void readExpense(){
+    public void createExpense(Expense expense){
+        repo.createExpense(expense);
+        expenses = repo.loadExpenses();
+    }
+
+    public void readExpenseInfo(Scanner scanner){
         System.out.print("What is the ID of the expense you would like to read? >>> ");
         int id;
         try{
@@ -61,8 +70,12 @@ public class Service {
                 System.out.println("No expense with that ID.");
                 return;
             }
-            System.out.println(repo.readExpense(id));
+            readExpense(id);
         } catch (Exception e) { System.out.println("Not a valid id."); }
+    }
+
+    public void readExpense(int id){
+        System.out.println(repo.readExpense(id));
     }
 
     public void listAllExpenses(){
@@ -71,7 +84,7 @@ public class Service {
         }
     }
 
-    public void updateExpense(){
+    public void updateExpenseInfo(Scanner scanner){
         int id;
         Date date;
         double value;
@@ -94,11 +107,16 @@ public class Service {
             System.out.print("Who was the merchant? >>> ");
             merchant = scanner.nextLine();
             Expense newExpense = new Expense(id, date, value, merchant);
-            repo.updateExpense(newExpense);
+            updateExpense(newExpense);
         } catch (Exception e) { System.out.println("INVALID INPUT"); }
     }
 
-    public void deleteExpense(){
+    public void updateExpense(Expense expense){
+        repo.updateExpense(expense);
+        expenses = repo.loadExpenses();
+    }
+
+    public void deleteExpenseInfo(Scanner scanner){
         System.out.print("What is the ID of the expense you would like to delete? >>> ");
         int id;
         try{
@@ -108,19 +126,27 @@ public class Service {
                 System.out.println("No expense with that ID.");
                 return;
             }
-            repo.deleteExpense(id);
+            deleteExpense(id);
         } catch (Exception e) { System.out.println("Not a valid id."); }
     }
 
-    public void setRepo(){
+    public void deleteExpense(int id) {
+        repo.deleteExpense(id);
+    }
+
+    public void setRepoInfo(Scanner scanner){
         System.out.print("Which repository would you like to utilize?\n\t\ttxt\tcsv\tjson\n>>> ");
-        String r = scanner.nextLine();
+        String input = scanner.nextLine();
+        setRepo(input);
+    }
+
+    public void setRepo(String input){
         IRepository temp;
-        switch (r.toLowerCase()) {
+        switch (input.toLowerCase()) {
             case "txt" -> {
                 temp = new TextRepository();
                 temp.clearRepo();
-                for(Expense expense : this.expenses){
+                for (Expense expense : this.expenses) {
                     temp.createExpense(expense);
                 }
                 this.repo = temp;
@@ -129,7 +155,7 @@ public class Service {
             case "csv" -> {
                 temp = new CSVRepository();
                 temp.clearRepo();
-                for(Expense expense : this.expenses){
+                for (Expense expense : this.expenses) {
                     temp.createExpense(expense);
                 }
                 this.repo = temp;
@@ -138,7 +164,7 @@ public class Service {
             case "json" -> {
                 temp = new JSONRepository();
                 temp.clearRepo();
-                for(Expense expense : this.expenses){
+                for (Expense expense : this.expenses) {
                     temp.createExpense(expense);
                 }
                 this.repo = temp;

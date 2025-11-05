@@ -68,6 +68,7 @@ public class CSVRepository implements IRepository{
                 writer.write(expense.toCSV());
                 writer.newLine();
             }
+            writer.flush();
             writer.close();
             System.out.println("Created \"expenses.csv\" file");
         } catch (Exception e) { System.out.println(e); }

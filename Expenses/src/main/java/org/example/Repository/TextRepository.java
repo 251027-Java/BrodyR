@@ -64,6 +64,7 @@ public class TextRepository implements IRepository{
                 writer.write(expense.toString());
                 writer.newLine();
             }
+            writer.flush();
             writer.close();
             System.out.println("Created \"expenses.txt\" file");
         } catch (Exception e) { System.out.println(e); }

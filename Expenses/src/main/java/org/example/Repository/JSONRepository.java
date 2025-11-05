@@ -58,6 +58,7 @@ public class JSONRepository implements IRepository{
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
             gson.toJson(expenses, writer);
+            writer.flush();
             writer.close();
             System.out.println("Created \"expenses.json\" file");
         } catch (Exception e) { System.out.println(e); }
