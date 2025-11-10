@@ -1,13 +1,16 @@
 package org.example;
 
 import org.example.Service.Service;
+import org.example.Repository.*;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    static void main() {
+    static void main() throws SQLException {
         System.out.println("Expense Tracker Starting...");
-        Service service = new Service();
+        IRepository repo = new H2Repository();
+        Service service = new Service(repo);
         Scanner scanner = new Scanner(System.in);
         String input;
         do {

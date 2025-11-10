@@ -66,10 +66,6 @@ public class Service {
         try{
             id = scanner.nextInt();
             scanner.nextLine();
-            if(id < 1 || id > expenses.size()){
-                System.out.println("No expense with that ID.");
-                return;
-            }
             readExpense(id);
         } catch (Exception e) { System.out.println("Not a valid id."); }
     }
@@ -80,7 +76,9 @@ public class Service {
 
     public void listAllExpenses(){
         for (Expense e : expenses){
-            System.out.println(e);
+            if (e != null) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -93,10 +91,6 @@ public class Service {
             System.out.print("What is the ID of the expense you would like to update? >>> ");
             id = scanner.nextInt();
             scanner.nextLine();
-            if(id < 1 || id > expenses.size()){
-                System.out.println("No expense with that ID.");
-                return;
-            }
             System.out.print("What is the date of the expense? (Type \"now\" for current date) >>> ");
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("now")){ date = new Date(); }
@@ -122,20 +116,19 @@ public class Service {
         try{
             id = scanner.nextInt();
             scanner.nextLine();
-            if(id < 1 || id > expenses.size()){
-                System.out.println("No expense with that ID.");
-                return;
-            }
             deleteExpense(id);
         } catch (Exception e) { System.out.println("Not a valid id."); }
     }
 
     public void deleteExpense(int id) {
         repo.deleteExpense(id);
+        expenses = repo.loadExpenses();
     }
 
+    public List<Expense> getExpenses(){ return this.expenses; }
+
     public void setRepoInfo(Scanner scanner){
-        System.out.print("Which repository would you like to utilize?\n\t\ttxt\tcsv\tjson\n>>> ");
+        System.out.print("Which repository would you like to utilize?\n\t\ttxt\tcsv\tjson\th2\n>>> ");
         String input = scanner.nextLine();
         setRepo(input);
     }
@@ -176,9 +169,5 @@ public class Service {
 
     public void help(){
         System.out.println("Actions:\nset repository\ncreate expense\nread expense\nlist all expenses\nupdate expense\ndelete expense");
-    }
-
-    public List<Expense> getExpenses(){
-        return expenses;
     }
 }
