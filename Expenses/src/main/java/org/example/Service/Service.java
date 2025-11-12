@@ -2,9 +2,14 @@ package org.example.Service;
 
 import org.example.Expense;
 import org.example.Repository.CSVRepository;
+import org.example.Repository.H2Repository;
 import org.example.Repository.IRepository;
 import org.example.Repository.JSONRepository;
+import org.example.Repository.MongoRepository;
+import org.example.Repository.PostgreSQLRepository;
 import org.example.Repository.TextRepository;
+
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.List;
@@ -44,12 +49,15 @@ public class Service {
 
     public void createExpenseInfo(Scanner scanner){
         try{
-            System.out.print("Please enter information for expense.\nValue:\t");
+            System.out.print("Please enter information for expense.\nID:\t");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Value:\t");
             double value = scanner.nextDouble();
             scanner.nextLine();
             System.out.print("Merchant:\t");
             String merchant = scanner.nextLine();
-            Expense newExpense = new Expense(expenses.size()+1, new Date(), value, merchant);
+            Expense newExpense = new Expense(id, new Date(), value, merchant);
             createExpense(newExpense);
             System.out.println("New expense created with id " + newExpense.getID() + ".\n" + newExpense);
         } catch(Exception e) { System.out.println("INVALID INPUT. CANCELLING EXPENSE CREATION"); }
@@ -127,13 +135,13 @@ public class Service {
 
     public List<Expense> getExpenses(){ return this.expenses; }
 
-    public void setRepoInfo(Scanner scanner){
-        System.out.print("Which repository would you like to utilize?\n\t\ttxt\tcsv\tjson\th2\n>>> ");
+    public void setRepoInfo(Scanner scanner) throws SQLException{
+        System.out.print("Which repository would you like to utilize?\ntxt\ncsv\njson\nh2\npostgre\nmongo\n>>> ");
         String input = scanner.nextLine();
         setRepo(input);
     }
 
-    public void setRepo(String input){
+    public void setRepo(String input) throws SQLException{
         IRepository temp;
         switch (input.toLowerCase()) {
             case "txt" -> {
@@ -163,11 +171,38 @@ public class Service {
                 this.repo = temp;
                 System.out.println("Set repository to json");
             }
+            case "h2" -> {
+                temp = new H2Repository();
+                temp.clearRepo();
+                for (Expense expense : this.expenses) {
+                    temp.createExpense(expense);
+                }
+                this.repo = temp;
+                System.out.println("Set repository to h2");
+            }
+            case "postgre" -> {
+                temp = new PostgreSQLRepository();
+                temp.clearRepo();
+                for (Expense expense : this.expenses) {
+                    temp.createExpense(expense);
+                }
+                this.repo = temp;
+                System.out.println("Set repository to postgre");
+            }
+            case "mongo" -> {
+                temp = new MongoRepository();
+                temp.clearRepo();
+                for (Expense expense : this.expenses) {
+                    temp.createExpense(expense);
+                }
+                this.repo = temp;
+                System.out.println("Set repository to mongo");
+            }
             default -> System.out.println("Not a valid repository.");
         }
     }
 
     public void help(){
-        System.out.println("Actions:\nset repository\ncreate expense\nread expense\nlist all expenses\nupdate expense\ndelete expense");
+        System.out.println("Actions:\nset repository\ncreate expense\nread expense\nlist all expenses\nupdate expense\ndelete expense\nexit");
     }
 }

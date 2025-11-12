@@ -53,6 +53,7 @@ public class CSVRepository implements IRepository{
                 expenses.add(new Expense(id, date, value, merchant));
                 System.out.println("Successfully loaded expenses from \"expenses.csv\"");
             }
+            reader.close();
         } catch ( Exception e ) { System.out.println(e); }
 
         return expenses;

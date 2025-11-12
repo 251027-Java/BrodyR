@@ -1,7 +1,6 @@
 package org.example.Repository;
 
 import org.example.Expense;
-import org.example.Repository.IRepository;
 
 import java.sql.*;
 
@@ -16,7 +15,7 @@ public class PostgreSQLRepository implements IRepository{
 
     public PostgreSQLRepository() throws SQLException{
         try{
-            connection = DriverManager.getConnection(Postgre_URL);
+            connection = DriverManager.getConnection(Postgre_URL, Postgre_User, Postgre_PW);
             try (Statement stmt = connection.createStatement()) {
                 String sql =
                         "CREATE SCHEMA IF NOT EXISTS ExpenseReport;" +
@@ -57,21 +56,22 @@ public class PostgreSQLRepository implements IRepository{
                 "SELECT * FROM ExpenseReport.Expenses WHERE Expenses.id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            stmt.executeUpdate();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            rs.next();
-            Expense expense = new Expense(
-                    rs.getInt("id"),
-                    new java.util.Date(rs.getTimestamp("date").getTime()),
-                    rs.getDouble("price"),
-                    rs.getString("merchant")
-            );
-            return expense;
+            stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                Expense expense = new Expense(
+                        rs.getInt("id"),
+                        new java.util.Date(rs.getTimestamp("date").getTime()),
+                        rs.getDouble("price"),
+                        rs.getString("merchant")
+                );
+                return expense;
+            }
+            System.out.println("No expense with that ID");
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("No expense with that ID");
         return null;
     }
 
@@ -121,6 +121,9 @@ public class PostgreSQLRepository implements IRepository{
 
     @Override
     public void clearRepo() {
-
+        try (Statement stmt = connection.createStatement()) {
+            String sql = "TRUNCATE TABLE ExpenseReport.Expenses";
+            stmt.execute(sql);
+        } catch (SQLException e) {e.printStackTrace();}
     }
 }

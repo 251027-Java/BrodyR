@@ -1,7 +1,6 @@
 package org.example.Repository;
 
 import org.example.Expense;
-import org.example.Repository.IRepository;
 
 import java.sql.*;
 
@@ -120,6 +119,9 @@ public class H2Repository implements IRepository{
 
     @Override
     public void clearRepo() {
-
+        try (Statement stmt = connection.createStatement()) {
+            String sql = "TRUNCATE TABLE ExpenseReport.Expenses";
+            stmt.execute(sql);
+        } catch (SQLException e) {e.printStackTrace();}
     }
 }

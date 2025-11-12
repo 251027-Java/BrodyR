@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
     static void main() throws SQLException {
         System.out.println("Expense Tracker Starting...");
-        IRepository repo = new H2Repository();
+        IRepository repo = new MongoRepository();
         Service service = new Service(repo);
         Scanner scanner = new Scanner(System.in);
         String input;
