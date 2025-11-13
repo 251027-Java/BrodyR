@@ -1,16 +1,22 @@
 package org.example;
 
 import org.example.Service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.example.Repository.*;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     static void main() throws SQLException {
         System.out.println("Expense Tracker Starting...");
+        log.info("Started the Expense Tracker");
         IRepository repo = new MongoRepository();
+        log.info("Created Repository");
         Service service = new Service(repo);
+        log.info("Created Service");
         Scanner scanner = new Scanner(System.in);
         String input;
         do {
@@ -27,6 +33,7 @@ public class Main {
             }
         } while (!input.equalsIgnoreCase("exit"));
 
-        System.out.println("Expensive Tracker Closing...");
+        System.out.println("Expense Tracker Closing...");
+        log.info("Closing the Expense Tracker");
     }
 }
