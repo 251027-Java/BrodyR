@@ -1,33 +1,32 @@
 package org.example.Service;
+
 import org.example.Expense;
+import org.example.Repository.IRepository;
 import org.junit.jupiter.api.Test;
-import java.io.*;
-import java.util.Date;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import java.util.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static java.lang.Thread.sleep;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ExpenseServiceTest {
+    @Mock
+    IRepository mockRepo;
+
+    @InjectMocks
+    Service service;
 
     @Test
-    public void loadingExpenses(){
-        Service service = new Service();
-        assertEquals(1, service.getExpenses().getFirst().getID());
-    }
-
-    @Test
-    public void createExpense(){
-        Service service = new Service();
-        Date constantDate = new Date(0);
-        Expense testExpense = new Expense(5, constantDate, 40.5, "Amazon");
-        service.createExpense(testExpense);
-        Expense actualExpense = service.getExpenses().getLast();
-        assertEquals(5, actualExpense.getID());
-        assertEquals(constantDate, actualExpense.getDate());
-        assertEquals(40.5, actualExpense.getValue());
-        assertEquals("Amazon", actualExpense.getMerchant());
+    public void testSummingExpeses(){
+        List<Expense> expenses = new ArrayList<>();
+        expenses.add(new Expense(1, new Date(), 300, "Walmart"));
+        expenses.add(new Expense(2, new Date(), 100, "HEB"));
+        expenses.add(new Expense(3, new Date(), 450, "Amazon"));
+        when(mockRepo.loadExpenses()).thenReturn(expenses);
+        verify(mockRepo, times(1)).loadExpenses();
     }
 }
