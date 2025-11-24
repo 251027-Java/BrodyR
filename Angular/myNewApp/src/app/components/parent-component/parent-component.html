@@ -1,0 +1,22 @@
+<p>Hello from Parent Component</p>
+
+<p>LOOK AT MY CHILDREN:</p>
+
+<div>
+    <!-- <p *ngFor = "let num of arr; let i = index">Hello I'm child {{i}}</p> -->
+    <app-child-component *ngFor="let num of arr" [index]="num"></app-child-component>
+</div>
+
+<h3>I have {{arr.length}} children</h3>
+
+<p *ngIf = "arr.length > 4">That's more than 4!</p>
+
+<button (click)="showSurprise()">Click me for a surprise</button>
+
+<h1 [hidden]="hideElement">Now I'm visible!</h1>
+
+<h3>Wait a minute, who are you?</h3>
+
+<input type="text" [(ngModel)]="nameInput">
+
+<p *ngIf = "nameInput">Nice to meet you, {{nameInput}}</p>
