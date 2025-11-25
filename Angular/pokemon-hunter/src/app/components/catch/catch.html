@@ -1,0 +1,12 @@
+<div class="container-fluid">
+
+    <div>
+        <h3>Click a Pokemon to catch it</h3>
+        <button class="btn btn-dark" (click)="getPokemon()">Reshuffle</button>
+    </div>
+    
+    <div>
+        <img src="{{pokemon.sprite}}" alt="" width="300">
+        <div style="font-size: 50px; font-family: PokemonHollow;">{{pokemon.name}}</div>
+    </div>
+</div>

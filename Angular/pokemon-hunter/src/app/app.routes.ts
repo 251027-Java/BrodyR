@@ -1,3 +1,19 @@
 import { Routes } from '@angular/router';
+import { Login } from './components/login/login';
+import { Dashboard } from './components/dashboard/dashboard';
+import { Catch } from './components/catch/catch';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {
+        path:"",
+        component:Login
+    },
+    {
+        path:"dashboard",
+        component:Dashboard
+    },
+    {
+        path:"catch",
+        component:Catch
+    }
+];
