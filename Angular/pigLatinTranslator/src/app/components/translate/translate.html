@@ -1,1 +1,17 @@
-<p>translate works!</p>
+<p style="margin-left:1%">Total Translations: {{this.translatorService.translationCounter}}</p>
+
+<div style="border: 1px solid black; max-width: 50%; margin: auto; margin-top: 2%; padding: 2%; display:flex; flex-direction: column;">
+    
+    <h2 style="text-align: center">English to Pig Latin Translator</h2>
+    
+    <label for="inputText">Enter your text:</label><br>
+    
+    <textarea id ="inputText" rows="10" [(ngModel)]="englishText"></textarea><br>
+    
+    <button (click)="translate()">Translate</button>
+
+    <div *ngIf="pigLatinText" style="border: 1px solid black;margin-top: 2%; padding: 2%; border-radius: 10px;background-color: #776bb9;">
+        {{pigLatinText}}
+    </div>
+
+</div>  

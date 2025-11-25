@@ -1,0 +1,7 @@
+button{
+    padding: 2%; border-radius: 25px; font-size: 125%; color: white; margin:auto;width:20%; background-color: #302f44;
+}
+
+button:hover{
+    background-color: #776bb9
+}

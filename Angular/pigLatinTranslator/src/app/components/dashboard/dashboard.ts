@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslatorService } from '../../services/translator-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+  constructor(public translatorService:TranslatorService){}
 
 }
