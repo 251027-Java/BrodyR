@@ -1,7 +1,14 @@
-<div class="container-fluid">
-    <h1>Welcome, [username]</h1>
+<div class="bgwrapper3">
+    <div class="container-fluid" style="position: absolute; top: 10%; left: 30%; transform: translate(-50%, 0);">
+        <div class="text-center">
+            <h1>Welcome, [username]</h1>
 
-    <h3 class="mt-3 border-bottom">You have X Pokemon</h3>
-    
-    <p>[Our Pokemon will go here]</p>
+            <h3 class="mt-3">You have {{pokemonService.caughtPokemon.length}} Pokemon</h3>
+            
+            <div class="text" *ngFor="let pokemon of pokemonService.caughtPokemon">
+                <img src="{{pokemon.sprite}}" alt="">
+                {{pokemon.name | titlecase}}
+            </div>
+        </div>
+    </div>
 </div>

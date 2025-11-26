@@ -1,12 +1,16 @@
-<div class="container-fluid">
-
-    <div>
-        <h3>Click a Pokemon to catch it</h3>
-        <button class="btn btn-dark" (click)="getPokemon()">Reshuffle</button>
-    </div>
-    
-    <div>
-        <img src="{{pokemon.sprite}}" alt="" width="300">
-        <div style="font-size: 50px; font-family: PokemonHollow;">{{pokemon.name}}</div>
+<div class="bgwrapper2">
+    <div class="container-fluid" style="position: absolute; top: 10%; left: 30%; transform: translate(-50%, 0);">
+        <div class="text-center">
+            <div>
+                <h1>Click a Pokemon to catch it</h1>
+                <br>
+                <button class="btn btn-dark" (click)="getPokemon()">Reshuffle</button>
+            </div>
+            
+            <div>
+                <img (click)="catchPokemon()" src="{{pokemon().sprite}}" alt="" width="300">
+                <h2>{{pokemon().name | titlecase}}</h2>
+            </div>
+        </div>
     </div>
 </div>

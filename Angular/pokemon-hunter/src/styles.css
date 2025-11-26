@@ -11,3 +11,27 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.bgwrapper{
+    background-image: url('assets/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+}
+
+.bgwrapper2 {
+    background-image: url('assets/bg2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+}
+
+h1, h2, h3, h4, h5, .text{
+    font-family: PokemonSolid;
+    color:#ffcb05;
+    -webkit-text-stroke:
+    0.07em #2a75bb;
+    letter-spacing: 2px;
+}

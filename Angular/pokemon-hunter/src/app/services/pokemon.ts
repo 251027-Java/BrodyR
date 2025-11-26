@@ -7,11 +7,14 @@ import { PokemonInterface } from '../interfaces/pokemon-interface';
   providedIn: 'root',
 })
 export class Pokemon {
+
+  caughtPokemon:PokemonInterface[] = []
+
   constructor(private http:HttpClient){}
 
   getPokemon():Observable<PokemonInterface>{
     const randomNum = Math.floor(Math.random() * 1025) + 1
-    return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${randomNum}`).pipe(
+    return this.http.get<PokemonInterface>(`https://pokeapi.co/api/v2/pokemon/${randomNum}`).pipe(
       map<any, PokemonInterface>(data => ({
         id:data.id,
         name:data.name,
