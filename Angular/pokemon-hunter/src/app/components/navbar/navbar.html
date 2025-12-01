@@ -11,8 +11,8 @@
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-success me-2" type="submit">Search</button>
-        <div *ngIf="isAuthenticated()">
-          <button class="btn btn-outline-light me-2" type="logout">Logout</button>
+        <div *ngIf="isLoggedIn()">
+          <button class="btn btn-outline-light me-2" type="logout" (click)="logout()">Logout</button>
         </div>
       </form>
     </div>

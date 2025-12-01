@@ -18,9 +18,7 @@ export class Login {
   login(){
     if(this.username === "user" && this.password === "password"){
       this.authService.authenticateUser()
-      this.router.navigateByUrl("/dashboard")
-    } else{
-      alert("Invalid Username or Password")
+      this.router.navigateByUrl("dashboard")
     }
   }
 }

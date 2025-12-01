@@ -25,9 +25,18 @@ export class Catch {
     })
   }
 
-  catchPokemon(){
-    this.pokemonService.caughtPokemon.push(this.pokemon())
-    alert("Caught " + this.pokemon().name)
-    this.pokemon.set({id:0, name:"", sprite:""})
+  private isCooldown = false;
+
+  catchPokemon() {
+    if (this.isCooldown) return;
+
+    this.isCooldown = true;
+
+    this.pokemonService.caughtPokemon.push(this.pokemon());
+    this.getPokemon();
+
+    setTimeout(() => {
+      this.isCooldown = false;
+    }, 600);
   }
 }

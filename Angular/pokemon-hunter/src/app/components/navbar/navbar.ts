@@ -16,7 +16,7 @@ export class Navbar {
     this.authService.logout()
   }
 
-  isAuthenticated():boolean{
-    return this.authService.isAuthenticated()
+  isLoggedIn():boolean{
+    return this.authService.isLoggedIn()
   }
 }
