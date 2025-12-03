@@ -1,27 +1,39 @@
 package com.revature.ExpenseReport.Model;
 
-import java.util.Date;
+import jakarta.persistence.*;
+import lombok.ToString;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "expenses")
 public class Expense {
-    @Id
-    @GeneratedValue
-    String id;
+    @Id @GeneratedValue private String expenseId;
+    @Column(name = "expenseMerchant") private String expenseMerchant;
+    private LocalDate expenseDate;
+    private BigDecimal expenseValue;
 
-    private Date date;
-    private double value;
-    private String merchant;
+    @ManyToOne()
+    @JoinColumn(name = "reportId")
+    @ToString.Exclude
+    private Report report;
 
-    public Expense(){}
+    public Expense() {}
 
-    public Expense(Date date, double value, String merchant){
-        this.date = date;
-        this.value = value;
-        this.merchant = merchant;
+    public Expense(LocalDate date, BigDecimal value, String merchant){
+        this.expenseDate = date;
+        this.expenseValue = value;
+        this.expenseMerchant = merchant;
     }
 
+    public String getId() { return expenseId; }
+    public LocalDate getDate() { return expenseDate; }
+    public BigDecimal getValue() { return expenseValue; }
+    public String getMerchant() { return expenseMerchant; }
+
+    public void setId(String id) { this.expenseId = id; }
+    public void setDate(LocalDate date) { this.expenseDate = date; }
+    public void setValue(BigDecimal value) { this.expenseValue = value; }
+    public void setMerchant(String merchant) { this.expenseMerchant = merchant; }
 }

@@ -1,11 +1,10 @@
 package com.revature.ExpenseReport.Repository;
 
-import java.util.List;
-
+import com.revature.ExpenseReport.Model.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.revature.ExpenseReport.Model.Expense;
+import java.util.List;
 
 public interface ExpenseRepository extends JpaRepository<Expense, String> {
-    List<Expense> findByMerchant(String merchant);
+    List<Expense> findByExpenseMerchant(String merchant);
 }
